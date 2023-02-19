@@ -1,0 +1,3 @@
+[submodule "PowersoftClient"]
+	path = PowersoftClient
+	url = ./PowersoftClient

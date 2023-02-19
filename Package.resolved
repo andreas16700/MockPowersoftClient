@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "ratelimitingcommunicator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/andreas16700/RateLimitingCommunicator.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "3a63502c1ab6874888fcbc9d5c20e2c6607cc8f1"
+      }
+    }
+  ],
+  "version" : 2
+}
