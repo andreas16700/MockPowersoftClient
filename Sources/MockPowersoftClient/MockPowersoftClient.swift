@@ -7,7 +7,7 @@ struct Wrapper<T: Codable>: Codable{
 	let content: T
 }
 
-public actor MockPsClient: PowersoftClientProtocol{
+public struct MockPsClient: PowersoftClientProtocol{
 	static let pageCapacity = 10000
 	//MARK: Items
 	public func getAllItemsCount(type: PowersoftKit.eCommerceType) async -> Int? {
