@@ -17,14 +17,20 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-		.package(name: "PowersoftClient", path: "PowersoftClient")
+		.package(name: "PowersoftKit", path: "../PowersoftKit"),
+		.package(name: "PowersoftClient", path: "../PowersoftClient"),
+		.package(name: "SwiftLinuxNetworking", path: "../SwiftLinuxNetworking")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MockPowersoftClient",
-            dependencies: ["PowersoftClient"]),
+            dependencies: [
+				.product(name: "PowersoftKit", package: "PowersoftKit"),
+				.product(name: "PowersoftClient", package: "PowersoftClient"),
+				.product(name: "SwiftLinuxNetworking", package: "SwiftLinuxNetworking")
+			]),
         .testTarget(
             name: "MockPowersoftClientTests",
             dependencies: ["MockPowersoftClient"]),
