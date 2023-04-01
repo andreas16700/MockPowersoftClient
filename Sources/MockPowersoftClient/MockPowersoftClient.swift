@@ -2,6 +2,10 @@ import Foundation
 import PowersoftKit
 import SwiftLinuxNetworking
 
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
 struct Blank: Codable{}
 struct Wrapper<T: Codable>: Codable{
 	let content: T
