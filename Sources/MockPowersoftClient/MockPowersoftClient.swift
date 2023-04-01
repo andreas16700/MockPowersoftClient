@@ -321,7 +321,7 @@ public struct MockPsClient: PowersoftClientProtocol{
 	}
 	
 	func sendRequest<T: Encodable, T2: Decodable>(path: String, method: String, body: T, expect: T2.Type)async ->T2?{
-		let url = baseURL.appending(path: path)
+		let url = baseURL.customAppendingPath(path: path)
 		var r: URLRequest = .init(url: url)
 		r.httpMethod = method
 		do{
@@ -439,5 +439,15 @@ func requestAll<T, Input>(inputs: Array<Input>, getter: @escaping (Input)async->
 			guard $0 != nil, let some = $1 else {$0=nil;return}
 			$0?.append(contentsOf: some)
 		}
+	}
+}
+public extension URL{
+	func customAppendingPath(path: String)->Self{
+		let u: URL = .init(string: path)!
+		var s = self
+		for p in u.pathComponents{
+			s = s.appendingPathComponent(p)
+		}
+		return s
 	}
 }
