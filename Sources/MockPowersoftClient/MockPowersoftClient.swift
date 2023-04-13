@@ -104,7 +104,7 @@ public struct MockPsClient: PowersoftClientProtocol{
 		}
 	}
 	public func getAllPaginated<T>(resourceName: String, countGetter: () async -> Int?, pageGetter: @escaping (Int) async -> [T]?) async -> [T]? {
-		guard let count = await countGetter() else {reportError("Nil count for resource \(resourceName)!"); return nil}
+		guard let count = await countGetter() else {print("Nil count for resource \(resourceName)!"); return nil}
 		var pages = count / pageCapacity
 		if (count % pageCapacity != 0){pages+=1}
 		let batchCount = 10
@@ -162,7 +162,7 @@ public struct MockPsClient: PowersoftClientProtocol{
 //
 //			for await s in taskGroup{
 //				guard let unwrapped = s else {
-//					reportError("Error retrieving page of all \(resourceName)!")
+//					print("Error retrieving page of all \(resourceName)!")
 //					r = .init();return r
 //				}
 //				added+=1
@@ -227,7 +227,7 @@ public struct MockPsClient: PowersoftClientProtocol{
 //
 //			print("Requesting page \(i)")
 //			guard let page = await pageGetter(i) else{
-//				reportError("Error retrieving page \(i) of all \(resourceName)!")
+//				print("Error retrieving page \(i) of all \(resourceName)!")
 //				return nil
 //			}
 //			stuff.append(contentsOf: page)
@@ -334,7 +334,7 @@ public struct MockPsClient: PowersoftClientProtocol{
 				let urlResp = response as! HTTPURLResponse
 				let wentOK = urlResp.statusCode >= 200 && urlResp.statusCode <= 299
 				guard wentOK else {
-					reportError("Error \(urlResp.statusCode) for request at \(url)")
+					print("Error \(urlResp.statusCode) for request at \(url)")
 					if T2.self == Bool.self{
 						return (false as! T2)
 					}
@@ -346,15 +346,15 @@ public struct MockPsClient: PowersoftClientProtocol{
 					let decoded = try decoder.decode(expect, from: respData)
 					return decoded
 				}catch{
-					reportError(title: "Error decoding response", error)
+					print(title: "Error decoding response", error)
 					return nil
 				}
 			}catch{
-				reportError(title: "Error sending request to \(url)", error)
+				print(title: "Error sending request to \(url)", error)
 				return nil
 			}
 		}catch{
-			reportError(title: "Error encoding payload", error)
+			print(title: "Error encoding payload", error)
 			return nil
 		}
 		
