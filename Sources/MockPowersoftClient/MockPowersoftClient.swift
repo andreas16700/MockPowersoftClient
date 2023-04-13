@@ -346,15 +346,15 @@ public struct MockPsClient: PowersoftClientProtocol{
 					let decoded = try decoder.decode(expect, from: respData)
 					return decoded
 				}catch{
-					print(title: "Error decoding response", error)
+					reportError(title: "Error decoding response", error)
 					return nil
 				}
 			}catch{
-				print(title: "Error sending request to \(url)", error)
+				reportError(title: "Error sending request to \(url)", error)
 				return nil
 			}
 		}catch{
-			print(title: "Error encoding payload", error)
+			reportError(title: "Error encoding payload", error)
 			return nil
 		}
 		
