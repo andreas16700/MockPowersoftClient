@@ -303,10 +303,15 @@ public struct MockPsClient: PowersoftClientProtocol{
 	){
 		self.pageCapacity=pageItemCapacity ?? Self.pageCapacity
 		self.baseURL = baseURL
+		let c = URLSessionConfiguration.default
+		c.timeoutIntervalForRequest = .infinity
+		c.timeoutIntervalForResource = .infinity
+		self.session = .init(configuration: c)
 	}
 	let baseURL: URL
 	let encoder = JSONEncoder()
 	let decoder = JSONDecoder()
+	let session: URLSession
 	
 	func sendRequest(path: String, method: String)async -> Bool{
 		return await sendRequest(path: path, method: method, body: Blank(), expect: Bool.self) ?? false
@@ -330,7 +335,7 @@ public struct MockPsClient: PowersoftClientProtocol{
 				r.httpBody = data
 			}
 			do{
-				let (respData, response) = try await URLSession.shared.asyncData(with: r)
+				let (respData, response) = try await session.asyncData(with: r)
 				let urlResp = response as! HTTPURLResponse
 				let wentOK = urlResp.statusCode >= 200 && urlResp.statusCode <= 299
 				guard wentOK else {
