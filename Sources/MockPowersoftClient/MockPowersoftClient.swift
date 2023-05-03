@@ -304,14 +304,15 @@ public struct MockPsClient: PowersoftClientProtocol{
 		self.pageCapacity=pageItemCapacity ?? Self.pageCapacity
 		self.baseURL = baseURL
 		let c = URLSessionConfiguration.default
-		c.timeoutIntervalForRequest = .infinity
-		c.timeoutIntervalForResource = .infinity
+		c.timeoutIntervalForRequest = Self.TIMEOUT_FOR_REQUESTS
+		c.timeoutIntervalForResource = Self.TIMEOUT_FOR_REQUESTS
 		self.session = .init(configuration: c)
 	}
 	let baseURL: URL
 	let encoder = JSONEncoder()
 	let decoder = JSONDecoder()
 	let session: URLSession
+	static let TIMEOUT_FOR_REQUESTS: TimeInterval = 5_000_000
 	
 	func sendRequest(path: String, method: String)async -> Bool{
 		return await sendRequest(path: path, method: method, body: Blank(), expect: Bool.self) ?? false
